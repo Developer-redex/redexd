@@ -1,0 +1,64 @@
+/* Mobile-specific enhancements */
+.btn {
+    /* Larger touch targets for mobile */
+    min-height: 44px;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.input-field {
+    /* Prevent zoom on iOS */
+    font-size: 16px;
+}
+
+/* Smooth scrolling for all devices */
+html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+}
+
+/* Better touch scrolling */
+body {
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Fix for iOS Safari bottom bar */
+@supports (-webkit-touch-callout: none) {
+    .hero {
+        min-height: -webkit-fill-available;
+    }
+}
+
+/* High DPI screens */
+@media (-webkit-min-device-pixel-ratio: 2),
+(min-resolution: 192dpi) {
+    .hero-image img {
+        image-rendering: -webkit-optimize-contrast;
+    }
+}
+
+/* Landscape mobile */
+@media (max-width: 767px) and (orientation: landscape) {
+    .hero {
+        padding: 1rem 0;
+    }
+
+    .hero-image {
+        max-width: 180px;
+    }
+}
+
+/* Print styles */
+@media print {
+
+    .header,
+    .footer,
+    .nav-buttons,
+    .mobile-menu-toggle {
+        display: none;
+    }
+
+    body {
+        background: white;
+        color: black;
+    }
+}

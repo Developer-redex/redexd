@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اسأل خبيراً - Redex</title>
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <link rel="stylesheet" href="../styles/globals.css">
+    <link rel="stylesheet" href="../styles/components.css">
+    <link rel="stylesheet" href="../styles/toast.css">
+</head>
+
+<body>
+    <header class="header" id="header">
+        <div class="container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">R</div>
+                <span>Redex</span>
+            </a>
+
+            <nav class="nav">
+                <ul class="nav-links">
+                    <li><a href="../index.html" class="nav-link">الرئيسية</a></li>
+                    <li><a href="projects.html" class="nav-link">مشاريع المجتمع</a></li>
+                    <li><a href="ask.html" class="nav-link active">اسأل خبيراً</a></li>
+                </ul>
+
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary btn-sm" onclick="toggleTheme()">🌗</button>
+                    <!-- Auth state -->
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container" style="margin-top: 4rem; max-width: 800px;">
+        <h1 class="section-title">مجتمع الأسئلة والأجوبة</h1>
+
+        <!-- Ask Form -->
+        <div class="card mb-xl">
+            <h3>لديك سؤال تقني؟</h3>
+            <form id="ask-form">
+                <div class="mb-md">
+                    <input type="text" id="question-title" class="input-field mb-sm" placeholder="عنوان السؤال"
+                        required>
+                    <textarea id="question-body" class="input-field" rows="3" placeholder="اشرح مشكلتك بالتفصيل..."
+                        required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">نشر السؤال</button>
+            </form>
+        </div>
+
+        <!-- Questions List -->
+        <div id="questions-list">
+            <!-- Loaded dynamically -->
+        </div>
+    </div>
+
+    <script src="../scripts/api.js"></script>
+    <script src="../scripts/main.js"></script>
+    <script>
+        document.getElementById('ask-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const currentUser = getFromLocalStorage('currentUser');
+            if (!currentUser) {
+                showToast('يجب عليك تسجيل الدخول لطرح سؤال!', 'warning');
+                setTimeout(() => window.location.href = 'login.html', 1500);
+                return;
+            }
+
+            const title = document.getElementById('question-title').value;
+            const body = document.getElementById('question-body').value;
+
+            const question = {
+                id: Date.now(),
+                author: currentUser.username,
+                avatar: currentUser.avatar,
+                title,
+                body,
+                date: new Date().toISOString(),
+                replies: []
+            };
+
+            try {
+                await DataService.addQuestion(question);
+                showToast('تم نشر سؤالك بنجاح!', 'success');
+                renderQuestions();
+                e.target.reset();
+            } catch (err) {
+                showToast('حدث خطأ أثناء نشر السؤال', 'error');
+            }
+        });
+
+        async function renderQuestions() {
+            const container = document.getElementById('questions-list');
+            const currentUser = getFromLocalStorage('currentUser');
+
+            try {
+                const questions = await DataService.getQuestions();
+
+                if (questions.length === 0) {
+                    container.innerHTML = '<p class="text-center text-muted">لا توجد أسئلة بعد. كن الأول!</p>';
+                    return;
+                }
+
+                container.innerHTML = questions.map(q => `
+                    <div class="card mb-md">
+                        <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                            <img src="${q.avatar || '../assets/favicon.svg'}" style="width: 40px; height: 40px; border-radius: 50%;">
+                            <div>
+                                <h4 style="margin: 0;">${q.author}</h4>
+                                <span class="text-muted text-sm">${new Date(q.date).toLocaleDateString()}</span>
+                            </div>
+                        </div>
+                        <h3 style="margin-bottom: 0.5rem; color: var(--color-primary);">${q.title}</h3>
+                        <p style="margin-bottom: 1.5rem;">${q.body}</p>
+                        
+                        <div style="background: var(--color-bg-body); padding: 1rem; border-radius: var(--border-radius-sm);">
+                            <h4 style="margin-bottom: 0.5rem;">الردود (${q.replies.length})</h4>
+                            ${q.replies.map(r => `
+                                <div style="border-bottom: 1px solid var(--color-border); padding: 0.5rem 0;">
+                                    <strong>${r.author}:</strong> ${r.text}
+                                </div>
+                            `).join('')}
+                            
+                            ${currentUser ? `
+                                <form onsubmit="addReply(event, ${q.id})" style="margin-top: 1rem; display: flex; gap: 0.5rem;">
+                                    <input type="text" class="input-field" placeholder="اكتب رداً..." required style="padding: 0.5rem;">
+                                    <button class="btn btn-secondary btn-sm">رد</button>
+                                </form>
+                            ` : ''}
+                        </div>
+                    </div>
+                `).join('');
+            } catch (err) {
+                container.innerHTML = '<p class="text-center text-error">فشل تحميل الأسئلة</p>';
+            }
+        }
+
+        // Global definition so HTML strings can access it
+        window.addReply = async function (e, questionId) {
+            e.preventDefault();
+            const input = e.target.querySelector('input');
+            const text = input.value;
+            const currentUser = getFromLocalStorage('currentUser');
+
+            if (!currentUser) return;
+
+            try {
+                await DataService.replyToQuestion(questionId, {
+                    author: currentUser.username,
+                    text: text,
+                    date: new Date().toISOString()
+                });
+                renderQuestions();
+            } catch (err) {
+                showToast('فشل في إضافة الرد', 'error');
+            }
+        };
+
+        // Initial Load
+        renderQuestions();
+    </script>
+    <script>
+        // Real-time Sync
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'redex_questions') {
+                renderQuestions();
+                showToast('🔄 تم تحديث الأسئلة', 'info', 2000);
+            }
+        });
+    </script>
+</body>
+
+</html>

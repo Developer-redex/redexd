@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تواصل معنا - Redex</title>
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <link rel="stylesheet" href="../styles/globals.css">
+    <link rel="stylesheet" href="../styles/components.css">
+    <link rel="stylesheet" href="../styles/toast.css">
+</head>
+
+<body>
+    <header class="header" id="header">
+        <div class="container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">R</div>
+                <span>Redex</span>
+            </a>
+
+            <nav class="nav">
+                <ul class="nav-links">
+                    <li><a href="../index.html" class="nav-link">الرئيسية</a></li>
+                    <li><a href="projects.html" class="nav-link">مشاريع المجتمع</a></li>
+                    <li><a href="ask.html" class="nav-link">اسأل خبيراً</a></li>
+                </ul>
+
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary btn-sm" onclick="toggleTheme()">🌗</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container" style="margin-top: 4rem; max-width: 800px;">
+        <h1 class="section-title">📱 تواصل معنا</h1>
+
+        <div class="card mb-xl" style="text-align: center;">
+            <h2>تابعنا على مواقع التواصل الاجتماعي</h2>
+            <p class="text-muted mb-lg">تابع آخر الأخبار والتحديثات والمشاريع الجديدة</p>
+
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a href="https://www.instagram.com/redex_dz52/" target="_blank" rel="noopener noreferrer"
+                    class="btn btn-primary btn-large"
+                    style="background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);">
+                    📷 تابعنا على Instagram
+                </a>
+
+                <a href="https://github.com/Developer-redex" target="_blank" rel="noopener noreferrer"
+                    class="btn btn-primary btn-large" style="background: #24292e;">
+                    💻 تابعنا على GitHub
+                </a>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>📧 تواصل عبر البريد الإلكتروني</h3>
+            <p class="text-muted mb-md">لديك استفسار أو اقتراح؟ لا تتردد في التواصل معنا</p>
+            <form id="contact-form">
+                <div class="mb-md">
+                    <input type="text" class="input-field" placeholder="الاسم" required>
+                </div>
+                <div class="mb-md">
+                    <input type="email" class="input-field" placeholder="البريد الإلكتروني" required>
+                </div>
+                <div class="mb-md">
+                    <textarea class="input-field" rows="5" placeholder="رسالتك..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">إرسال الرسالة</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="../scripts/main.js"></script>
+    <script>
+        document.getElementById('contact-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            showToast('شكراً لك! سنتواصل معك قريباً.', 'success');
+            e.target.reset();
+        });
+    </script>
+</body>
+
+</html>

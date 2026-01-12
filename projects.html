@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="مشاريع المجتمع - شارك واستكشف مشاريع برمجية من طلاب آخرين">
+    <title>مشاريع المجتمع - Redex</title>
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <link rel="stylesheet" href="../styles/globals.css">
+    <link rel="stylesheet" href="../styles/components.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">R</div>
+                <span>Redex</span>
+            </a>
+
+            <nav class="nav" id="nav">
+                <ul class="nav-links">
+                    <li><a href="../index.html" class="nav-link">الرئيسية</a></li>
+                    <li><a href="projects.html" class="nav-link">مشاريع المجتمع</a></li>
+                    <li><a href="ask.html" class="nav-link">اسأل خبيراً</a></li>
+                </ul>
+
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary btn-sm" onclick="toggleTheme()" title="تبديل الوضع">
+                        🌗
+                    </button>
+                    <button class="lang-toggle" onclick="toggleLanguage()">
+                        <span class="rtl-only">EN</span>
+                        <span class="ltr-only">عربي</span>
+                    </button>
+                    <a href="login.html" class="btn btn-secondary">تسجيل الدخول</a>
+                    <a href="register.html" class="btn btn-primary">إنشاء حساب</a>
+                </div>
+            </nav>
+
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" aria-label="القائمة">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section
+        style="background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light)); padding: 3rem 0; color: white;">
+        <div class="container text-center">
+            <h1>مشاريع المجتمع</h1>
+            <p style="font-size: 1.25rem; opacity: 0.95;">استكشف مشاريع مذهلة من طلاب مثلك</p>
+        </div>
+    </section>
+
+    <!-- Project Hub -->
+    <section class="section">
+        <div class="container">
+            <!-- Search and Filters -->
+            <div style="margin-bottom: 2rem;">
+                <div style="display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap;">
+                    <input type="search" class="input-field" placeholder="ابحث عن مشروع..."
+                        style="flex: 1; min-width: 250px;">
+                    <select class="input-field" style="max-width: 200px;">
+                        <option>جميع الفئات</option>
+                        <option>📱 تطبيقات Android</option>
+                        <option>🌐 مواقع الويب</option>
+                        <option>💻 برامج سطح المكتب</option>
+                        <option>🎮 ألعاب</option>
+                    </select>
+                    <select class="input-field" style="max-width: 200px;">
+                        <option>الأحدث</option>
+                        <option>الأكثر إعجاباً</option>
+                        <option>الأكثر تحميلاً</option>
+                    </select>
+                    <a href="upload.html" class="btn btn-primary">+ رفع مشروع</a>
+                </div>
+            </div>
+
+            <!-- Projects Grid -->
+            <div class="grid grid-cols-3" id="projects-grid">
+                <!-- Projects will be loaded from LocalStorage here -->
+                <div class="card text-center" style="grid-column: 1/-1; padding: 4rem;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">📭</div>
+                    <h3>لا توجد مشاريع حتى الآن</h3>
+                    <p style="color: var(--color-gray-600); margin-bottom: 2rem;">كن أول من يشارك مشروعه مع مجتمع Redex!
+                    </p>
+                    <a href="upload.html" class="btn btn-primary">رفع أول مشروع</a>
+                </div>
+            </div>
+
+            <!-- Load More -->
+            <div class="text-center mt-xl">
+                <button class="btn btn-secondary btn-large">تحميل المزيد من المشاريع</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section" style="background: var(--color-gray-50);">
+        <div class="container text-center">
+            <h2>هل لديك مشروع رائع؟</h2>
+            <p style="font-size: 1.25rem; color: var(--color-gray-600); margin-bottom: 2rem;">
+                شارك مشروعك مع المجتمع وابنِ سيرتك الذاتية البرمجية
+            </p>
+            <a href="upload.html" class="btn btn-primary btn-large">رفع مشروع جديد</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>عن المنصة</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">من نحن</a></li>
+                        <li><a href="#">رؤيتنا</a></li>
+                        <li><a href="#">فريق العمل</a></li>
+                        <li><a href="#">اتصل بنا</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>روابط سريعة</h4>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">الرئيسية</a></li>
+                        <li><a href="projects.html">المشاريع</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>المجتمع</h4>
+                    <ul class="footer-links">
+                        <li><a href="projects.html">المشاريع</a></li>
+                        <li><a href="ask.html">اسأل خبيراً</a></li>
+                        <li><a href="#">المنتدى</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>روابط مفيدة</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">الأسئلة الشائعة</a></li>
+                        <li><a href="#">سياسة الخصوصية</a></li>
+                        <li><a href="#">شروط الاستخدام</a></li>
+                        <li><a href="#">الدعم الفني</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 منصة Redex للتعليم البرمجي. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../scripts/api.js"></script>
+    <script src="../scripts/main.js"></script>
+    <script>
+        // Real-time Sync
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'redex_projects') {
+                loadProjectsToPage();
+                showToast('🔄 تم تحديث قائمة المشاريع', 'info', 2000);
+            }
+        });
+    </script>
+</body>
+
+</html>

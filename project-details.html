@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تفاصيل المشروع - Redex</title>
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <link rel="stylesheet" href="../styles/globals.css">
+    <link rel="stylesheet" href="../styles/components.css">
+</head>
+
+<body>
+    <header class="header" id="header">
+        <div class="container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">R</div>
+                <span>Redex</span>
+            </a>
+
+            <nav class="nav">
+                <ul class="nav-links">
+                    <li><a href="../index.html" class="nav-link">الرئيسية</a></li>
+                    <li><a href="projects.html" class="nav-link">مشاريع المجتمع</a></li>
+                    <li><a href="ask.html" class="nav-link">اسأل خبيراً</a></li>
+                </ul>
+
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary btn-sm" onclick="toggleTheme()">🌗</button>
+                    <!-- Auth state injected by JS -->
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container" style="margin-top: 4rem;">
+        <div class="card" id="project-details-container">
+            <!-- Details loaded via JS -->
+            <p>جاري تحميل التفاصيل...</p>
+        </div>
+    </div>
+
+    <script src="../scripts/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const projectId = urlParams.get('id');
+            const projects = getFromLocalStorage('redex_projects') || [];
+            // Loose comparison because ID might be string or number
+            const project = projects.find(p => p.id == projectId);
+
+            // Increment views
+            if (project && typeof incrementViews === 'function') {
+                incrementViews(projectId);
+            }
+
+            const container = document.getElementById('project-details-container');
+
+            if (project) {
+                container.innerHTML = `
+                    <div style="display: grid; grid-template-columns: 1fr 300px; gap: 2rem;">
+                        <div>
+                            <img src="${project.image}" style="width: 100%; height: 400px; object-fit: cover; border-radius: var(--border-radius-md); margin-bottom: 2rem;">
+                            
+                            <h1 class="mb-md">${project.title}</h1>
+                            
+                            <div style="display: flex; gap: 1rem; margin-bottom: 2rem;">
+                                <span class="badge">${project.category}</span>
+                                <span class="text-muted">📅 ${new Date(project.date).toLocaleDateString()}</span>
+                            </div>
+
+                            <p style="font-size: 1.1rem; line-height: 1.8; color: var(--color-text-secondary); white-space: pre-wrap;">${project.description}</p>
+                        </div>
+
+                        <div>
+                            <div style="background: var(--color-bg-body); padding: 1.5rem; border-radius: var(--border-radius-md); border: 1px solid var(--color-border); position: sticky; top: 100px;">
+                                <h3 class="mb-md">معلومات المطور</h3>
+                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+                                    <div style="width: 50px; height: 50px; background: var(--color-primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: bold;">
+                                        ${project.author.charAt(0).toUpperCase()}
+                                    </div>
+                                    <div>
+                                        <div style="font-weight: bold;">${project.author}</div>
+                                        <div class="text-muted text-sm">مطور مشارك</div>
+                                    </div>
+                                </div>
+
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--color-border);">
+                                    <span>التحميلات</span>
+                                    <strong>${project.stats.downloads}</strong>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 2rem;">
+                                    <span>الإعجابات</span>
+                                    <strong>${project.stats.likes}</strong>
+                                </div>
+
+                                ${project.downloadLink ?
+                        `<a href="${project.downloadLink}" target="_blank" onclick="incrementDownloads(${project.id})" class="btn btn-primary" style="width: 100%; text-align: center;">📥 تحميل المشروع</a>` :
+                        `<button disabled class="btn btn-secondary" style="width: 100%;">رابط التحميل غير متوفر</button>`
+                    }
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = '<h2>المشروع غير موجود!</h2><a href="projects.html" class="btn btn-primary">عودة للمشاريع</a>';
+            }
+        });
+    </script>
+</body>
+
+</html>

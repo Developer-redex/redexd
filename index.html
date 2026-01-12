@@ -1,12 +1,226 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Whatscap</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/renderer/main.jsx"></script>
-  </body>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="منصة تعليمية شاملة للمبرمجين - تعلم البرمجة بطريقة عملية مع محرر أكواد تفاعلي ومشاركة المشاريع">
+    <meta name="keywords" content="تعلم البرمجة, جافا, بايثون, سي بلس بلس, تطوير الويب, دورات برمجة">
+    <meta name="author" content="Redex Learning Platform">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Redex - منصة تعليمية للبرمجة">
+    <meta property="og:description" content="تعلم البرمجة بطريقة عملية مع محرر أكواد تفاعلي">
+    <meta property="og:type" content="website">
+
+    <title>Redex - منصة تعليمية للبرمجة</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="styles/globals.css">
+    <link rel="stylesheet" href="styles/components.css">
+    <link rel="stylesheet" href="styles/mobile-enhancements.css">
+    <link rel="stylesheet" href="styles/toast.css">
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+    <!-- ============================================
+         HEADER & NAVIGATION
+         ============================================ -->
+    <header class="header" id="header">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">R</div>
+                <span>Redex</span>
+            </a>
+
+            <nav class="nav" id="nav">
+                <ul class="nav-links">
+                    <li><a href="index.html" class="nav-link" data-i18n="nav_home">الرئيسية</a></li>
+                    <li><a href="pages/projects.html" class="nav-link" data-i18n="nav_projects">مشاريع المجتمع</a></li>
+                    <li><a href="pages/ask.html" class="nav-link" data-i18n="nav_ask">اسأل خبيراً</a></li>
+                </ul>
+
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary btn-sm" onclick="toggleTheme()" title="تبديل الوضع">
+                        🌗
+                    </button>
+                    <button class="lang-toggle" onclick="toggleLanguage()">
+                        <span class="rtl-only">EN</span>
+                        <span class="ltr-only">عربي</span>
+                    </button>
+                    <a href="pages/login.html" class="btn btn-secondary">تسجيل الدخول</a>
+                    <a href="pages/register.html" class="btn btn-primary">إنشاء حساب</a>
+                </div>
+            </nav>
+
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" aria-label="القائمة">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- ============================================
+         HERO SECTION
+         ============================================ -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 data-i18n="hero_title">تعلم البرمجة بطريقة عملية</h1>
+                <p data-i18n="hero_subtitle">منصة تعليمية شاملة للمبرمجين مع محرر أكواد تفاعلي ومجتمع نشط لمشاركة
+                    المشاريع وبناء سيرتك الذاتية</p>
+                <div class="hero-buttons">
+                    <a href="pages/projects.html" class="btn btn-primary btn-large" data-i18n="btn_browse">تصفح
+                        المشاريع</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="assets/robot.svg" alt="Redex Robot" style="max-width: 100%; height: auto;">
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         LEARNING PATHS SECTION
+         ============================================ -->
+    <!-- Learning Paths Section Removed -->
+
+    <!-- ============================================
+         FEATURED PROJECTS SECTION
+         ============================================ -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">مشاريع مميزة من المجتمع</h2>
+
+            <div class="grid grid-cols-3" id="featured-projects-container">
+                <!-- Projects will be loaded dynamically -->
+                <p class="text-muted" style="grid-column: 1/-1; text-align: center;">لا توجد مشاريع حالياً. كن أول من
+                    يشارك!</p>
+            </div>
+
+            <div class="text-center mt-xl">
+                <a href="pages/projects.html" class="btn btn-primary btn-large">عرض جميع المشاريع</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         FEATURES SECTION
+         ============================================ -->
+    <section class="section" style="background: var(--color-gray-50);">
+        <div class="container">
+            <h2 class="section-title">لماذا منصة redex؟</h2>
+
+            <div class="grid grid-cols-3">
+                <div class="card text-center">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">📝</div>
+                    <h3>دروس نصية شاملة</h3>
+                    <p class="card-text">محتوى أكاديمي منظم بعناية مع أمثلة عملية وصور توضيحية</p>
+                </div>
+
+                <div class="card text-center">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">💻</div>
+                    <h3>محرر أكواد تفاعلي</h3>
+                    <p class="card-text">اكتب وجرب الكود مباشرة في المتصفح دون الحاجة لتثبيت أي برامج</p>
+                </div>
+
+                <div class="card text-center">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🚀</div>
+                    <h3>شارك مشاريعك</h3>
+                    <p class="card-text">انشر مشاريعك وابنِ سيرتك الذاتية مع مجتمع من المبرمجين</p>
+                </div>
+
+                <div class="card text-center">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">📚</div>
+                    <h3>مكتبة موارد غنية</h3>
+                    <p class="card-text">كتب إلكترونية، قاموس مصطلحات، وأدوات مساعدة</p>
+                </div>
+
+                <div class="card text-center">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🎯</div>
+                    <h3>اختبارات تفاعلية</h3>
+                    <p class="card-text">تقييم مستواك مع اختبارات في نهاية كل درس</p>
+                </div>
+
+                <div class="card text-center">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🌍</div>
+                    <h3>محتوى بالعربية</h3>
+                    <p class="card-text">واجهة عربية كاملة مع دعم المصطلحات التقنية</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         FOOTER
+         ============================================ -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>عن المنصة</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">من نحن</a></li>
+                        <li><a href="#">رؤيتنا</a></li>
+                        <li><a href="#">فريق العمل</a></li>
+                        <li><a href="#">اتصل بنا</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>روابط سريعة</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">الرئيسية</a></li>
+                        <li><a href="pages/projects.html">المشاريع</a></li>
+                        <li><a href="pages/ask.html">اسأل خبيراً</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>المجتمع</h4>
+                    <ul class="footer-links">
+                        <li><a href="pages/projects.html">المشاريع</a></li>
+                        <li><a href="#">المنتدى</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>روابط مفيدة</h4>
+                    <ul class="footer-links">
+                        <li><a href="pages/contact.html">تواصل معنا</a></li>
+                        <li><a href="#">الأسئلة الشائعة</a></li>
+                        <li><a href="#">سياسة الخصوصية</a></li>
+                        <li><a href="#">شروط الاستخدام</a></li>
+                        <li><a href="#">الدعم الفني</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2026 منصة Redex للتعليم البرمجي. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="scripts/api.js"></script>
+    <script src="scripts/main.js"></script>
+    <script>
+        // Real-time Sync
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'redex_projects') {
+                loadFeaturedProjects();
+                showToast('🔄 تم تحديث المشاريع المميزة', 'info', 2000);
+            }
+        });
+    </script>
+</body>
+
 </html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الملف الشخصي - Redex</title>
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <link rel="stylesheet" href="../styles/globals.css">
+    <link rel="stylesheet" href="../styles/toast.css">
+    <link rel="stylesheet" href="../styles/components.css">
+    <style>
+        .profile-container {
+            max-width: 800px;
+            margin: 4rem auto;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .profile-sidebar {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-sm);
+            text-align: center;
+        }
+
+        .profile-avatar-large {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1rem;
+            border: 4px solid var(--color-primary-light);
+        }
+
+        .profile-content {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-sm);
+        }
+
+        @media (max-width: 768px) {
+            .profile-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header" id="header">
+        <div class="container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">R</div>
+                <span>Redex</span>
+            </a>
+
+            <nav class="nav">
+                <ul class="nav-links">
+                    <li><a href="../index.html" class="nav-link">الرئيسية</a></li>
+                    <li><a href="projects.html" class="nav-link">مشاريع المجتمع</a></li>
+                </ul>
+
+                <div class="nav-buttons">
+                    <!-- Auth state handled by main.js -->
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container" style="min-height: calc(100vh - 140px);">
+        <form id="profile-form" class="profile-container">
+            <!-- Sidebar -->
+            <div class="profile-sidebar">
+                <div style="position: relative; display: inline-block;">
+                    <img id="avatar-preview" src="https://ui-avatars.com/api/?name=User&background=random" alt="Avatar"
+                        class="profile-avatar-large">
+                    <label for="avatar-input" class="btn btn-sm btn-secondary"
+                        style="position: absolute; bottom: 10px; right: 0; border-radius: 50%; padding: 8px; cursor: pointer;">
+                        📷
+                    </label>
+                    <input type="file" id="avatar-input" accept="image/*" style="display: none;">
+                </div>
+                <h3 id="sidebar-username">المستخدم</h3>
+                <p id="sidebar-role" class="text-muted">مطور برمجيات</p>
+            </div>
+
+            <!-- Main Content -->
+            <div class="profile-content">
+                <h2 class="mb-lg">تعديل الملف الشخصي</h2>
+
+                <div class="mb-md">
+                    <label class="mb-sm" style="display: block; font-weight: bold;">اسم المستخدم</label>
+                    <input type="text" id="username" class="input-field" required>
+                </div>
+
+                <div class="mb-md">
+                    <label class="mb-sm" style="display: block; font-weight: bold;">الوصف (Bio)</label>
+                    <textarea id="bio" class="input-field" rows="4" placeholder="أخبرنا قليلاً عن نفسك..."></textarea>
+                </div>
+
+                <hr style="margin: 2rem 0; border: 0; border-top: 1px solid var(--color-gray-200);">
+
+                <h3 class="mb-md">الأمان</h3>
+
+                <div class="mb-lg">
+                    <label class="mb-sm" style="display: block; font-weight: bold;">كلمة المرور الجديدة</label>
+                    <input type="password" id="password" class="input-field"
+                        placeholder="اتركها فارغة إذا لم ترد التغيير">
+                </div>
+
+                <div style="display: flex; gap: 1rem;">
+                    <button type="submit" class="btn btn-primary">حفظ التغييرات</button>
+                    <button type="button" class="btn btn-secondary"
+                        onclick="window.location.href='../index.html'">إلغاء</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script src="../scripts/api.js"></script>
+    <script src="../scripts/main.js"></script>
+    <script>
+        // Load User Data
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = getFromLocalStorage('currentUser');
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Populate Fields
+            document.getElementById('username').value = user.username;
+            document.getElementById('sidebar-username').textContent = user.username;
+
+            if (user.bio) document.getElementById('bio').value = user.bio;
+
+            // Avatar logic
+            const avatarUrl = user.avatar || `https://ui-avatars.com/api/?name=${user.username}&background=random`;
+            document.getElementById('avatar-preview').src = avatarUrl;
+        });
+
+        // Handle Avatar Preview
+        document.getElementById('avatar-input').addEventListener('change', function (e) {
+            if (this.files && this.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById('avatar-preview').src = e.target.result;
+                };
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+
+        // Handle Form Submit
+        document.getElementById('profile-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const currentUser = getFromLocalStorage('currentUser');
+            const allUsers = getFromLocalStorage('redex_users') || [];
+
+            // New Data
+            const newUsername = document.getElementById('username').value;
+            const newBio = document.getElementById('bio').value;
+            const newPassword = document.getElementById('password').value;
+            const avatarSrc = document.getElementById('avatar-preview').src;
+
+            // Updated User Object
+            const updatedUser = {
+                ...currentUser,
+                username: newUsername,
+                bio: newBio,
+                avatar: avatarSrc.startsWith('data:') ? avatarSrc : currentUser.avatar
+            };
+
+            if (newPassword) {
+                updatedUser.password = newPassword;
+            }
+
+            // Update in allUsers array
+            const userIndex = allUsers.findIndex(u => u.username === currentUser.username);
+            if (userIndex !== -1) {
+                allUsers[userIndex] = updatedUser;
+                saveToLocalStorage('redex_users', allUsers);
+            }
+
+            // Update currentUser session
+            saveToLocalStorage('currentUser', updatedUser);
+
+            showToast('تم تحديث الملف الشخصي بنجاح!', 'success');
+            setTimeout(() => location.reload(), 1500);
+        });
+    </script>
+</body>
+
+</html>

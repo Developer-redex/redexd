@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول - Redex</title>
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <link rel="stylesheet" href="../styles/globals.css">
+    <link rel="stylesheet" href="../styles/toast.css">
+    <link rel="stylesheet" href="../styles/components.css">
+    <style>
+        .auth-container {
+            max-width: 400px;
+            margin: 4rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-md);
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header" id="header">
+        <div class="container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">R</div>
+                <span>Redex</span>
+            </a>
+
+            <nav class="nav">
+                <ul class="nav-links">
+                    <li><a href="../index.html" class="nav-link">الرئيسية</a></li>
+                    <li><a href="projects.html" class="nav-link">مشاريع المجتمع</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="auth-container">
+            <h2 class="text-center mb-md">تسجيل الدخول</h2>
+            <p class="text-center text-muted mb-lg">مرحباً بعودتك! سجل دخولك للوصول إلى حسابك</p>
+
+            <form id="login-form">
+                <div class="mb-md">
+                    <label class="mb-sm" style="display: block; font-weight: bold;">اسم المستخدم</label>
+                    <input type="text" id="username" class="input-field" required
+                        placeholder="أدخل اسم المستخدم الخاص بك">
+                    <small class="text-muted" style="display: block; margin-top: 0.25rem;">مثال: ahmed123</small>
+                </div>
+
+                <div class="mb-lg">
+                    <label class="mb-sm" style="display: block; font-weight: bold;">كلمة المرور</label>
+                    <input type="password" id="password" class="input-field" required placeholder="أدخل كلمة المرور">
+                    <small class="text-muted" style="display: block; margin-top: 0.25rem;">يجب أن تكون 6 أحرف على
+                        الأقل</small>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%;">دخول</button>
+
+                <p class="text-center mt-md text-muted">
+                    ليس لديك حساب؟ <a href="register.html" style="color: var(--color-primary); font-weight: bold;">أنشئ
+                        حساباً جديداً</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <script src="../scripts/main.js"></script>
+    <script>
+        document.getElementById('login-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Verify credentials
+            const users = getFromLocalStorage('redex_users') || [];
+            const user = users.find(u => u.username === username && u.password === password);
+
+            if (user) {
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                showToast('تم تسجيل الدخول بنجاح! مرحباً ' + user.username, 'success');
+                setTimeout(() => window.location.href = '../index.html', 1500);
+            } else {
+                showToast('خطأ في اسم المستخدم أو كلمة المرور', 'error');
+            }
+        });
+    </script>
+</body>
+
+</html>

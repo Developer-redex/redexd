@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إنشاء حساب - Redex</title>
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <link rel="stylesheet" href="../styles/globals.css">
+    <link rel="stylesheet" href="../styles/toast.css">
+    <link rel="stylesheet" href="../styles/components.css">
+    <style>
+        .auth-container {
+            max-width: 400px;
+            margin: 4rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-md);
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header" id="header">
+        <div class="container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">R</div>
+                <span>Redex</span>
+            </a>
+
+            <nav class="nav">
+                <ul class="nav-links">
+                    <li><a href="../index.html" class="nav-link">الرئيسية</a></li>
+                    <li><a href="projects.html" class="nav-link">مشاريع المجتمع</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="auth-container">
+            <h2 class="text-center mb-md">إنشاء حساب جديد</h2>
+            <p class="text-center text-muted mb-lg">انضم إلى مجتمع Redex وابدأ رحلتك البرمجية!</p>
+
+            <form id="register-form">
+                <div class="mb-md">
+                    <label class="mb-sm" style="display: block; font-weight: bold;">اسم المستخدم</label>
+                    <input type="text" id="username" class="input-field" required minlength="3"
+                        placeholder="اختر اسم مستخدم فريد">
+                    <small class="text-muted" style="display: block; margin-top: 0.25rem;">على الأقل 3 أحرف، مثال:
+                        ahmed123</small>
+                </div>
+
+                <div class="mb-md">
+                    <label class="mb-sm" style="display: block; font-weight: bold;">البريد الإلكتروني</label>
+                    <input type="email" id="email" class="input-field" required placeholder="example@gmail.com">
+                    <small class="text-muted" style="display: block; margin-top: 0.25rem;">سنستخدمه لاسترجاع
+                        الحساب</small>
+                </div>
+
+                <div class="mb-lg">
+                    <label class="mb-sm" style="display: block; font-weight: bold;">كلمة المرور</label>
+                    <input type="password" id="password" class="input-field" required minlength="6"
+                        placeholder="أدخل كلمة مرور قوية">
+                    <small class="text-muted" style="display: block; margin-top: 0.25rem;">يجب أن تكون 6 أحرف على
+                        الأقل</small>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%;">إنشاء الحساب</button>
+
+                <p class="text-center mt-md text-muted">
+                    لديك حساب بالفعل؟ <a href="login.html" style="color: var(--color-primary); font-weight: bold;">سجل
+                        دخولك هنا</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <script src="../scripts/main.js"></script>
+    <script>
+        document.getElementById('register-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Check if user exists
+            const users = getFromLocalStorage('redex_users') || [];
+            if (users.some(u => u.username === username)) {
+                showToast('اسم المستخدم موجود بالفعل', 'error');
+                return;
+            }
+
+            // Create user
+            const newUser = {
+                id: Date.now(),
+                username,
+                email,
+                password // Note: In a real app, never store passwords in plain text!
+            };
+
+            users.push(newUser);
+            saveToLocalStorage('redex_users', users);
+
+            // Auto login
+            localStorage.setItem('redex_users', JSON.stringify(users));
+
+            showToast('تم إنشاء الحساب بنجاح!', 'success');
+            setTimeout(() => window.location.href = 'login.html', 1500);
+        });
+    </script>
+</body>
+
+</html>

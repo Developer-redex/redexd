@@ -1,0 +1,38 @@
+{
+  "projects": [
+    {
+      "id": 1,
+      "title": "لعبة الذاكرة",
+      "description": "لعبة تدريب ذاكرة بسيطة باستخدام JavaScript. ساعدتني كثيراً في فهم المصفوفات.",
+      "image": "https://via.placeholder.com/400x300/3b82f6/ffffff?text=Memory+Game",
+      "category": "🎮 ألعاب",
+      "author": "Ahmed",
+      "status": "approved",
+      "date": "2026-01-10T01:07:16.918Z",
+      "stats": {
+        "likes": 5,
+        "views": 120,
+        "downloads": 10
+      },
+      "downloadLink": "https://github.com/example/memory-game"
+    },
+    {
+      "id": 2,
+      "title": "تطبيق مهامي",
+      "description": "تطبيق لتنظيم المهام اليومية مع إمكانية الحفظ المحلي.",
+      "image": "https://via.placeholder.com/400x300/10b981/ffffff?text=Todo+App",
+      "category": "📱 تطبيقات",
+      "author": "Sarah",
+      "status": "approved",
+      "date": "2026-01-10T01:07:16.919Z",
+      "stats": {
+        "likes": 12,
+        "views": 200,
+        "downloads": 45
+      },
+      "downloadLink": "https://github.com/example/todo-app"
+    }
+  ],
+  "questions": [],
+  "users": []
+}

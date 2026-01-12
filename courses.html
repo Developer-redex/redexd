@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="استكشف دوراتنا البرمجية - Java, Python, C++, تطوير الويب والمزيد">
+    <title>الدورات - منصة هرمش</title>
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <link rel="stylesheet" href="../styles/globals.css">
+    <link rel="stylesheet" href="../styles/components.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">💻</div>
+                <span>هرمش</span>
+            </a>
+
+            <nav class="nav" id="nav">
+                <ul class="nav-links">
+                    <li><a href="../index.html" class="nav-link">الرئيسية</a></li>
+                    <li><a href="courses.html" class="nav-link">الدورات</a></li>
+                    <li><a href="projects.html" class="nav-link">مشاريع المجتمع</a></li>
+                    <li><a href="resources.html" class="nav-link">الموارد</a></li>
+                </ul>
+
+                <div class="nav-buttons">
+                    <button class="lang-toggle" onclick="toggleLanguage()">
+                        <span class="rtl-only">EN</span>
+                        <span class="ltr-only">عربي</span>
+                    </button>
+                    <a href="login.html" class="btn btn-secondary">تسجيل الدخول</a>
+                    <a href="register.html" class="btn btn-primary">إنشاء حساب</a>
+                </div>
+            </nav>
+
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" aria-label="القائمة">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section
+        style="background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light)); padding: 3rem 0; color: white;">
+        <div class="container text-center">
+            <h1>دوراتنا التعليمية</h1>
+            <p style="font-size: 1.25rem; opacity: 0.95;">اختر مسارك وابدأ رحلتك في عالم البرمجة</p>
+        </div>
+    </section>
+
+    <!-- Courses Grid -->
+    <section class="section">
+        <div class="container">
+            <!-- Filter Section -->
+            <div style="margin-bottom: 2rem; display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
+                <button class="btn btn-primary">الكل</button>
+                <button class="btn btn-secondary">للمبتدئين</button>
+                <button class="btn btn-secondary">متوسط</button>
+                <button class="btn btn-secondary">متقدم</button>
+            </div>
+
+            <div class="grid grid-cols-3">
+                <!-- Java Course -->
+                <div class="card" id="java">
+                    <div class="course-icon" style="margin-bottom: 1rem;">☕</div>
+                    <div class="badge mb-md">مبتدئ</div>
+                    <h3 class="card-title">دورة برمجة Java الشاملة</h3>
+                    <p class="card-text">تعلم جافا من الصفر حتى الاحتراف مع أمثلة عملية ومشاريع تطبيقية</p>
+                    <div style="display: flex; gap: 1rem; margin: 1rem 0; color: var(--color-gray-600);">
+                        <span>📚 40 درس</span>
+                        <span>⏱️ 45 ساعة</span>
+                        <span>👥 2,500 طالب</span>
+                    </div>
+                    <a href="#" class="btn btn-primary" style="width: 100%;">ابدأ الدورة</a>
+                </div>
+
+                <!-- Python Course -->
+                <div class="card" id="python">
+                    <div class="course-icon" style="margin-bottom: 1rem;">🐍</div>
+                    <div class="badge mb-md">مبتدئ</div>
+                    <h3 class="card-title">دورة برمجة Python</h3>
+                    <p class="card-text">اكتشف قوة بايثون في تطوير التطبيقات وتحليل البيانات</p>
+                    <div style="display: flex; gap: 1rem; margin: 1rem 0; color: var(--color-gray-600);">
+                        <span>📚 35 درس</span>
+                        <span>⏱️ 38 ساعة</span>
+                        <span>👥 3,200 طالب</span>
+                    </div>
+                    <a href="#" class="btn btn-primary" style="width: 100%;">ابدأ الدورة</a>
+                </div>
+
+                <!-- C++ Course -->
+                <div class="card" id="cpp">
+                    <div class="course-icon" style="margin-bottom: 1rem;">⚙️</div>
+                    <div class="badge mb-md" style="background: var(--color-warning); color: white;">متوسط</div>
+                    <h3 class="card-title">دورة برمجة C++</h3>
+                    <p class="card-text">تعلم البرمجة الكائنية وإدارة الذاكرة مع C++</p>
+                    <div style="display: flex; gap: 1rem; margin: 1rem 0; color: var(--color-gray-600);">
+                        <span>📚 45 درس</span>
+                        <span>⏱️ 50 ساعة</span>
+                        <span>👥 1,800 طالب</span>
+                    </div>
+                    <a href="#" class="btn btn-primary" style="width: 100%;">ابدأ الدورة</a>
+                </div>
+
+                <!-- Web Development -->
+                <div class="card" id="webdev">
+                    <div class="course-icon" style="margin-bottom: 1rem;">🌐</div>
+                    <div class="badge mb-md">مبتدئ</div>
+                    <h3 class="card-title">تطوير الويب الحديث</h3>
+                    <p class="card-text">HTML, CSS, JavaScript وبناء مواقع تفاعلية احترافية</p>
+                    <div style="display: flex; gap: 1rem; margin: 1rem 0; color: var(--color-gray-600);">
+                        <span>📚 50 درس</span>
+                        <span>⏱️ 55 ساعة</span>
+                        <span>👥 4,100 طالب</span>
+                    </div>
+                    <a href="#" class="btn btn-primary" style="width: 100%;">ابدأ الدورة</a>
+                </div>
+
+                <!-- C# Course -->
+                <div class="card" id="csharp">
+                    <div class="course-icon" style="margin-bottom: 1rem;">🎯</div>
+                    <div class="badge mb-md">مبتدئ</div>
+                    <h3 class="card-title">دورة برمجة C#</h3>
+                    <p class="card-text">تطوير تطبيقات Windows وألعاب Unity باستخدام C#</p>
+                    <div style="display: flex; gap: 1rem; margin: 1rem 0; color: var(--color-gray-600);">
+                        <span>📚 42 درس</span>
+                        <span>⏱️ 48 ساعة</span>
+                        <span>👥 2,100 طالب</span>
+                    </div>
+                    <a href="#" class="btn btn-primary" style="width: 100%;">ابدأ الدورة</a>
+                </div>
+
+                <!-- Algorithms -->
+                <div class="card" id="algorithms">
+                    <div class="course-icon" style="margin-bottom: 1rem;">🧮</div>
+                    <div class="badge mb-md" style="background: var(--color-error); color: white;">متقدم</div>
+                    <h3 class="card-title">الخوارزميات وحل المشكلات</h3>
+                    <p class="card-text">أساسيات الخوارزميات والتعقيد الزمني وحل المسائل</p>
+                    <div style="display: flex; gap: 1rem; margin: 1rem 0; color: var(--color-gray-600);">
+                        <span>📚 30 درس</span>
+                        <span>⏱️ 40 ساعة</span>
+                        <span>👥 1,500 طالب</span>
+                    </div>
+                    <a href="#" class="btn btn-primary" style="width: 100%;">ابدأ الدورة</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>عن المنصة</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">من نحن</a></li>
+                        <li><a href="#">رؤيتنا</a></li>
+                        <li><a href="#">فريق العمل</a></li>
+                        <li><a href="#">اتصل بنا</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>الدورات</h4>
+                    <ul class="footer-links">
+                        <li><a href="#java">برمجة Java</a></li>
+                        <li><a href="#python">برمجة Python</a></li>
+                        <li><a href="#webdev">تطوير الويب</a></li>
+                        <li><a href="#algorithms">الخوارزميات</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>المجتمع</h4>
+                    <ul class="footer-links">
+                        <li><a href="projects.html">المشاريع</a></li>
+                        <li><a href="resources.html">الموارد</a></li>
+                        <li><a href="#">المنتدى</a></li>
+                        <li><a href="#">المدونة</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>روابط مفيدة</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">الأسئلة الشائعة</a></li>
+                        <li><a href="#">سياسة الخصوصية</a></li>
+                        <li><a href="#">شروط الاستخدام</a></li>
+                        <li><a href="#">الدعم الفني</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 منصة هرمش للتعليم البرمجي. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../scripts/main.js"></script>
+</body>
+
+</html>

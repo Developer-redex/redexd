@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="مكتبة الموارد - كتب إلكترونية، قاموس مصطلحات، وأدوات مفيدة للمبرمجين">
+    <title>الموارد - منصة هرمش</title>
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <link rel="stylesheet" href="../styles/globals.css">
+    <link rel="stylesheet" href="../styles/components.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">💻</div>
+                <span>هرمش</span>
+            </a>
+
+            <nav class="nav" id="nav">
+                <ul class="nav-links">
+                    <li><a href="../index.html" class="nav-link">الرئيسية</a></li>
+                    <li><a href="courses.html" class="nav-link">الدورات</a></li>
+                    <li><a href="projects.html" class="nav-link">مشاريع المجتمع</a></li>
+                    <li><a href="resources.html" class="nav-link">الموارد</a></li>
+                </ul>
+
+                <div class="nav-buttons">
+                    <button class="lang-toggle" onclick="toggleLanguage()">
+                        <span class="rtl-only">EN</span>
+                        <span class="ltr-only">عربي</span>
+                    </button>
+                    <a href="login.html" class="btn btn-secondary">تسجيل الدخول</a>
+                    <a href="register.html" class="btn btn-primary">إنشاء حساب</a>
+                </div>
+            </nav>
+
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" aria-label="القائمة">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section
+        style="background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light)); padding: 3rem 0; color: white;">
+        <div class="container text-center">
+            <h1>مكتبة الموارد</h1>
+            <p style="font-size: 1.25rem; opacity: 0.95;">كل ما تحتاجه لتطوير مهاراتك البرمجية</p>
+        </div>
+    </section>
+
+    <!-- Resources Categories -->
+    <section class="section">
+        <div class="container">
+            <!-- E-Books Section -->
+            <div style="margin-bottom: 4rem;">
+                <h2 class="section-title">📚 الكتب الإلكترونية</h2>
+                <div class="grid grid-cols-3">
+                    <div class="card">
+                        <div style="font-size: 4rem; text-align: center; margin-bottom: 1rem;">📘</div>
+                        <h3 class="card-title">أساسيات البرمجة</h3>
+                        <p class="card-text">كتاب شامل للمبتدئين في عالم البرمجة</p>
+                        <div class="mb-md text-muted">📄 250 صفحة • 📥 3,420 تحميل</div>
+                        <button class="btn btn-primary" style="width: 100%;">تحميل PDF</button>
+                    </div>
+
+                    <div class="card">
+                        <div style="font-size: 4rem; text-align: center; margin-bottom: 1rem;">📕</div>
+                        <h3 class="card-title">هياكل البيانات والخوارزميات</h3>
+                        <p class="card-text">دليل متقدم مع أمثلة عملية بالعربية</p>
+                        <div class="mb-md text-muted">📄 420 صفحة • 📥 2,180 تحميل</div>
+                        <button class="btn btn-primary" style="width: 100%;">تحميل PDF</button>
+                    </div>
+
+                    <div class="card">
+                        <div style="font-size: 4rem; text-align: center; margin-bottom: 1rem;">📗</div>
+                        <h3 class="card-title">تطوير تطبيقات الويب</h3>
+                        <p class="card-text">من HTML إلى React وأطر العمل الحديثة</p>
+                        <div class="mb-md text-muted">📄 380 صفحة • 📥 4,560 تحميل</div>
+                        <button class="btn btn-primary" style="width: 100%;">تحميل PDF</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dictionary Section -->
+            <div style="margin-bottom: 4rem;">
+                <h2 class="section-title">📖 قاموس المصطلحات البرمجية</h2>
+                <div class="card" style="max-width: 800px; margin: 0 auto;">
+                    <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
+                        <input type="search" class="input-field" placeholder="ابحث عن مصطلح (عربي أو إنجليزي)..."
+                            style="flex: 1;">
+                        <button class="btn btn-primary">بحث</button>
+                    </div>
+
+                    <div
+                        style="border: 2px solid var(--color-gray-200); border-radius: var(--border-radius-md); padding: 1.5rem;">
+                        <h3 style="color: var(--color-primary); margin-bottom: 0.5rem;">Array - المصفوفة</h3>
+                        <p style="color: var(--color-gray-600); margin-bottom: 1rem;">
+                            <strong>التعريف:</strong> هيكل بيانات يحتوي على مجموعة من العناصر من نفس النوع، مرتبة بشكل
+                            متسلسل ويمكن الوصول إليها عبر الفهرس.
+                        </p>
+                        <div
+                            style="background: var(--color-code-bg); padding: 1rem; border-radius: var(--border-radius-md); color: var(--color-code-text); font-family: var(--font-code);">
+                            int[] numbers = {1, 2, 3, 4, 5};
+                        </div>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 2rem;">
+                        <p class="text-muted">القاموس يحتوي على أكثر من 500 مصطلح برمجي</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quiz Engine Section -->
+            <div style="margin-bottom: 4rem;">
+                <h2 class="section-title">🎯 محرك الاختبارات</h2>
+                <div class="grid grid-cols-2">
+                    <div class="card">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🟢</div>
+                        <h3 class="card-title">اختبار المبتدئين</h3>
+                        <p class="card-text">اختبر معرفتك بأساسيات البرمجة</p>
+                        <div class="mb-md text-muted">⏱️ 15 دقيقة • 📊 20 سؤال</div>
+                        <button class="btn btn-primary" style="width: 100%;">ابدأ الاختبار</button>
+                    </div>
+
+                    <div class="card">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🟡</div>
+                        <h3 class="card-title">اختبار المتوسطين</h3>
+                        <p class="card-text">تحدى نفسك في البرمجة الكائنية</p>
+                        <div class="mb-md text-muted">⏱️ 25 دقيقة • 📊 30 سؤال</div>
+                        <button class="btn btn-primary" style="width: 100%;">ابدأ الاختبار</button>
+                    </div>
+
+                    <div class="card">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🔴</div>
+                        <h3 class="card-title">اختبار المتقدمين</h3>
+                        <p class="card-text">أسئلة متقدمة في الخوارزميات والتعقيد</p>
+                        <div class="mb-md text-muted">⏱️ 40 دقيقة • 📊 40 سؤال</div>
+                        <button class="btn btn-primary" style="width: 100%;">ابدأ الاختبار</button>
+                    </div>
+
+                    <div class="card">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🎓</div>
+                        <h3 class="card-title">اختبار شامل</h3>
+                        <p class="card-text">اختبار تقييم شامل لجميع المستويات</p>
+                        <div class="mb-md text-muted">⏱️ 60 دقيقة • 📊 50 سؤال</div>
+                        <button class="btn btn-primary" style="width: 100%;">ابدأ الاختبار</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cheat Sheets -->
+            <div>
+                <h2 class="section-title">📋 الأوراق المرجعية السريعة</h2>
+                <div class="grid grid-cols-4">
+                    <div class="card text-center">
+                        <div style="font-size: 3rem; margin-bottom: 0.5rem;">☕</div>
+                        <h4>Java Cheat Sheet</h4>
+                        <button class="btn btn-secondary mt-md" style="width: 100%;">تحميل</button>
+                    </div>
+
+                    <div class="card text-center">
+                        <div style="font-size: 3rem; margin-bottom: 0.5rem;">🐍</div>
+                        <h4>Python Cheat Sheet</h4>
+                        <button class="btn btn-secondary mt-md" style="width: 100%;">تحميل</button>
+                    </div>
+
+                    <div class="card text-center">
+                        <div style="font-size: 3rem; margin-bottom: 0.5rem;">🌐</div>
+                        <h4>HTML/CSS Guide</h4>
+                        <button class="btn btn-secondary mt-md" style="width: 100%;">تحميل</button>
+                    </div>
+
+                    <div class="card text-center">
+                        <div style="font-size: 3rem; margin-bottom: 0.5rem;">⚙️</div>
+                        <h4>Git Commands</h4>
+                        <button class="btn btn-secondary mt-md" style="width: 100%;">تحميل</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>عن المنصة</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">من نحن</a></li>
+                        <li><a href="#">رؤيتنا</a></li>
+                        <li><a href="#">فريق العمل</a></li>
+                        <li><a href="#">اتصل بنا</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>الدورات</h4>
+                    <ul class="footer-links">
+                        <li><a href="courses.html#java">برمجة Java</a></li>
+                        <li><a href="courses.html#python">برمجة Python</a></li>
+                        <li><a href="courses.html#webdev">تطوير الويب</a></li>
+                        <li><a href="courses.html#algorithms">الخوارزميات</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>المجتمع</h4>
+                    <ul class="footer-links">
+                        <li><a href="projects.html">المشاريع</a></li>
+                        <li><a href="resources.html">الموارد</a></li>
+                        <li><a href="#">المنتدى</a></li>
+                        <li><a href="#">المدونة</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>روابط مفيدة</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">الأسئلة الشائعة</a></li>
+                        <li><a href="#">سياسة الخصوصية</a></li>
+                        <li><a href="#">شروط الاستخدام</a></li>
+                        <li><a href="#">الدعم الفني</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 منصة هرمش للتعليم البرمجي. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../scripts/main.js"></script>
+</body>
+
+</html>

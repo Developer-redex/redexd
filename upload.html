@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>رفع مشروع جديد - Redex</title>
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <link rel="stylesheet" href="../styles/globals.css">
+    <link rel="stylesheet" href="../styles/components.css">
+    <link rel="stylesheet" href="../styles/toast.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">R</div>
+                <span>Redex</span>
+            </a>
+
+            <nav class="nav" id="nav">
+                <ul class="nav-links">
+                    <li><a href="../index.html" class="nav-link">الرئيسية</a></li>
+                    <li><a href="projects.html" class="nav-link">مشاريع المجتمع</a></li>
+                    <li><a href="ask.html" class="nav-link">اسأل خبيراً</a></li>
+                </ul>
+
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary btn-sm" onclick="toggleTheme()" title="تبديل الوضع">
+                        🌗
+                    </button>
+                    <button class="lang-toggle" onclick="toggleLanguage()">
+                        <span class="rtl-only">EN</span>
+                        <span class="ltr-only">عربي</span>
+                    </button>
+                    <a href="login.html" class="btn btn-secondary">تسجيل الدخول</a>
+                    <a href="register.html" class="btn btn-primary">إنشاء حساب</a>
+                </div>
+            </nav>
+
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" aria-label="القائمة">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <section class="section">
+        <div class="container" style="max-width: 800px;">
+            <h1 class="text-center mb-xl">رفع مشروع جديد</h1>
+
+            <form id="upload-form" class="card">
+                <div class="mb-md">
+                    <label class="mb-sm" style="display: block; font-weight: bold;">اسم المشروع</label>
+                    <input type="text" id="project-title" class="input-field" required placeholder="مثال: تطبيق مهامي">
+                </div>
+
+                <div class="mb-md">
+                    <label class="mb-sm" style="display: block; font-weight: bold;">اسم المطور</label>
+                    <input type="text" id="project-author" class="input-field" required placeholder="مثال: أحمد محمد">
+                </div>
+
+                <div class="mb-md">
+                    <label class="mb-sm" style="display: block; font-weight: bold;">الفئة</label>
+                    <select id="project-category" class="input-field">
+                        <option value="📱 Android">تطبيق Android</option>
+                        <option value="🌐 Web">موقع ويب</option>
+                        <option value="💻 Desktop">برنامج سطح مكتب</option>
+                        <option value="🎮 Game">لعبة</option>
+                    </select>
+                </div>
+
+                <div class="mb-md">
+                    <label class="mb-sm" style="display: block; font-weight: bold;">الوصف</label>
+                    <textarea id="project-desc" class="input-field" rows="4" required
+                        placeholder="صف مشروعك باختصار..."></textarea>
+                </div>
+
+                <div class="mb-md">
+                    <label class="mb-sm" style="display: block; font-weight: bold;">رابط التحميل</label>
+                    <input type="url" id="project-download" class="input-field" required
+                        placeholder="https://example.com/download.zip">
+                </div>
+
+                <div class="mb-xl">
+                    <label class="mb-sm" style="display: block; font-weight: bold;">صورة المشروع</label>
+                    <input type="file" id="project-image" class="input-field" accept="image/*" required
+                        onchange="previewUploadImage(this)">
+                    <div id="upload-preview-container" style="margin-top: 1rem; display: none;">
+                        <img id="upload-preview" src="" alt="معاينة"
+                            style="max-width: 100%; height: 200px; object-fit: cover; border-radius: var(--border-radius-md); border: 2px dashed var(--color-primary-light);">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%;">نشر المشروع</button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>© 2026 منصة Redex للتعليم البرمجي. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../scripts/api.js"></script>
+    <script src="../scripts/main.js"></script>
+    <script src="../scripts/link-checker.js"></script>
+    <script>
+        // Upload logic specific script
+        document.getElementById('upload-form').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const submitBtn = this.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'جاري الرفع...';
+
+            const title = document.getElementById('project-title').value;
+            const author = document.getElementById('project-author').value;
+            const category = document.getElementById('project-category').value;
+            const desc = document.getElementById('project-desc').value;
+            const downloadLink = document.getElementById('project-download').value;
+
+            // Check link safety
+            const safetyCheck = checkLinkSafety(downloadLink);
+
+            if (!safetyCheck.safe) {
+                const warnings = safetyCheck.warnings.join('\n');
+                const proceed = confirm(`تحذير أمان!\n\n${warnings}\n\nمعدل الثقة: ${safetyCheck.trustScore}%\n\nهل تريد المتابعة على مسؤوليتك الخاصة؟`);
+                if (!proceed) return;
+            }
+
+            const fileInput = document.getElementById('project-image');
+
+            // Process image
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    const project = {
+                        id: Date.now(),
+                        title: title,
+                        author: author,
+                        category: category,
+                        description: desc,
+                        downloadLink: downloadLink,
+                        image: e.target.result, // Base64 image
+                        date: new Date().toISOString(),
+                        stats: {
+                            likes: 0,
+                            downloads: 0,
+                            views: 0
+                        },
+                        status: 'pending', // Projects need admin approval
+                        safetyCheck: safetyCheck // Store safety check results
+                    };
+
+                    // Save to localStorage
+                    saveProject(project);
+                    showToast('✅ تم رفع مشروعك بنجاح! سيتم مراجعته والموافقة عليه قريباً.', 'success');
+                    setTimeout(() => window.location.href = 'projects.html', 1500);
+                };
+
+                reader.readAsDataURL(fileInput.files[0]);
+            }
+        });
+
+        function previewUploadImage(input) {
+            const previewContainer = document.getElementById('upload-preview-container');
+            const previewImage = document.getElementById('upload-preview');
+
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    previewImage.src = e.target.result;
+                    previewContainer.style.display = 'block';
+                }
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                previewContainer.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حذف البيانات - Redex</title>
+    <link rel="stylesheet" href="../styles/globals.css">
+    <style>
+        .admin-panel {
+            max-width: 600px;
+            margin: 4rem auto;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .danger-zone {
+            background: rgba(239, 68, 68, 0.1);
+            border: 2px solid #ef4444;
+            border-radius: var(--border-radius-lg);
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="admin-panel">
+            <h1>🗑️ حذف البيانات</h1>
+            <p class="text-muted">إدارة بيانات المنصة المخزنة محلياً</p>
+
+            <div class="danger-zone">
+                <h3 style="color: #ef4444;">⚠️ منطقة خطر</h3>
+                <p>هذه الإجراءات لا يمكن التراجع عنها!</p>
+
+                <button onclick="clearProjects()" class="btn btn-secondary"
+                    style="margin: 0.5rem; border-color: #ef4444; color: #ef4444;">
+                    حذف جميع المشاريع
+                </button>
+
+                <button onclick="clearQuestions()" class="btn btn-secondary"
+                    style="margin: 0.5rem; border-color: #f59e0b; color: #f59e0b;">
+                    حذف جميع الأسئلة
+                </button>
+
+                <button onclick="clearAll()" class="btn btn-secondary"
+                    style="margin: 0.5rem; border-color: #ef4444; color: #ef4444;">
+                    حذف كل البيانات
+                </button>
+            </div>
+
+            <div id="status" style="margin-top: 2rem;"></div>
+
+            <a href="../index.html" class="btn btn-primary" style="margin-top: 2rem; display: inline-block;">
+                العودة للصفحة الرئيسية
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function showStatus(message, type = 'success') {
+            const statusDiv = document.getElementById('status');
+            statusDiv.innerHTML = `
+                <div style="padding: 1rem; background: ${type === 'success' ? 'rgba(16, 185, 129, 0.2)' : 'rgba(239, 68, 68, 0.2)'}; 
+                             border-radius: var(--border-radius-md); color: ${type === 'success' ? '#10b981' : '#ef4444'};">
+                    ${message}
+                </div>
+            `;
+        }
+
+        function clearProjects() {
+            if (confirm('هل أنت متأكد من حذف جميع المشاريع؟ هذا الإجراء لا يمكن التراجع عنه!')) {
+                localStorage.removeItem('redex_projects');
+                showStatus('✅ تم حذف جميع المشاريع بنجاح!', 'success');
+            }
+        }
+
+        function clearQuestions() {
+            if (confirm('هل أنت متأكد من حذف جميع الأسئلة؟')) {
+                localStorage.removeItem('redex_questions');
+                showStatus('✅ تم حذف جميع الأسئلة بنجاح!', 'success');
+            }
+        }
+
+        function clearAll() {
+            if (confirm('⚠️ تحذير: سيتم حذف جميع البيانات بما في ذلك:\n- المشاريع\n- الأسئلة\n- الحسابات\n- الإعدادات\n\nهل أنت متأكد؟')) {
+                if (confirm('هل أنت متأكد تماماً؟ هذا الإجراء لا يمكن التراجع عنه!')) {
+                    localStorage.clear();
+                    showStatus('✅ تم حذف جميع البيانات!', 'success');
+                    setTimeout(() => {
+                        window.location.href = '../index.html';
+                    }, 2000);
+                }
+            }
+        }
+
+        // Display current data stats
+        window.addEventListener('DOMContentLoaded', () => {
+            const projects = JSON.parse(localStorage.getItem('redex_projects') || '[]');
+            const questions = JSON.parse(localStorage.getItem('redex_questions') || '[]');
+            const users = JSON.parse(localStorage.getItem('redex_users') || '[]');
+
+            const info = document.createElement('div');
+            info.className = 'card';
+            info.innerHTML = `
+                <h3>البيانات المخزنة حالياً:</h3>
+                <p>📦 المشاريع: <strong>${projects.length}</strong></p>
+                <p>❓ الأسئلة: <strong>${questions.length}</strong></p>
+                <p>👤 المستخدمين: <strong>${users.length}</strong></p>
+            `;
+            document.querySelector('.admin-panel').insertBefore(info, document.querySelector('.danger-zone'));
+        });
+    </script>
+</body>
+
+</html>

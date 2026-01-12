@@ -1,0 +1,54 @@
+{
+    "name": "whatscap",
+    "private": true,
+    "version": "1.0.0",
+    "main": "src/main/main.js",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "preview": "vite preview",
+        "electron:dev": "concurrently \"npm run dev\" \"wait-on tcp:5173 && electron .\"",
+        "electron:build": "vite build && electron-builder",
+        "server": "node src/server/server.js",
+        "postinstall": "electron-builder install-app-deps"
+    },
+    "dependencies": {
+        "better-sqlite3": "^9.2.2",
+        "clsx": "^2.1.0",
+        "date-fns": "^3.0.6",
+        "lucide-react": "^0.294.0",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "react-window": "^1.8.10",
+        "simple-peer": "^9.11.1",
+        "socket.io": "^4.7.2",
+        "socket.io-client": "^4.7.2",
+        "tailwind-merge": "^2.2.0",
+        "uuid": "^9.0.1"
+    },
+    "devDependencies": {
+        "@vitejs/plugin-react": "^4.2.1",
+        "concurrently": "^8.2.2",
+        "electron": "^28.1.0",
+        "electron-builder": "^24.9.1",
+        "vite": "^5.0.8",
+        "wait-on": "^7.2.0"
+    },
+    "build": {
+        "appId": "com.whatscap.app",
+        "productName": "WhatsCap",
+        "win": {
+            "target": "nsis",
+            "icon": "resources/icon.ico"
+        },
+        "directories": {
+            "output": "dist-electron"
+        },
+        "files": [
+            "dist/**/*",
+            "src/main/**/*",
+            "src/preload/**/*",
+            "src/server/**/*"
+        ]
+    }
+}
